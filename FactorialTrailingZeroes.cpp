@@ -1,3 +1,4 @@
+//https://leetcode.com/problems/factorial-trailing-zeroes/
 class Solution {
 public:
     void rec(long int deg, int n, int &zrs) {
