@@ -10,32 +10,22 @@
 class Solution {
 public:
     vector<int> nextLargerNodes(ListNode* head) {
-        vector <int> res;
-        ListNode* root = head;
+      vector<int> res, stack;
 
-        for(ListNode* root = head; root; root = root -> next) {
-            res.push_back(root -> val);
-        }
+      for (ListNode* p = head; p != nullptr; p = p->next)
+          res.push_back(p -> val);
 
-        int sz = res.size();
+      for (int i = res.size() - 1; i >= 0; --i) {
+        int val = res[i];
 
-        for(int i = 0; i < sz - 1; i++) {
-            int j = i + 1;
-            bool con = true;
-            while (con & j < sz) {
-                if (res[j] > res[i]) {
-                    res[i] = res[j];
-                    con = false;
-                }
-                j++;
-            }
-            if (con) {
-                res[i] = 0;
-            }
-        }
+        //hella lit
+        while (!stack.empty() && stack.back() <= res[i])
+            stack.pop_back();
 
-        res[sz - 1] = 0;
+        res[i] = stack.empty() ? 0 : stack.back();
 
-        return res;
+        stack.push_back(val);
+      }
+      return res;
     }
 };
